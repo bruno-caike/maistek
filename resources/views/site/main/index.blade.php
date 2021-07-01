@@ -1,0 +1,169 @@
+@extends('site.layout')
+@section('content')
+@include('site.components.header')
+<!-- SECAO START -->
+<section class="sec2">
+    <div class="container">
+        <header class="header-2">
+            <div>
+                <h1 class="fraseTopo">{{ isset($tec->title) ? $tec->title : '' }}</h1>
+                <h5 class="textoTopo">
+                    <p>{{ isset($tec->contents) ? $tec->contents : '' }}</p>
+                </H5>
+
+                <a href="#" class="botaoInfo">MAIS INFORMAÇÕES</a>
+
+            </div>
+
+            <img src="img/conputer.png" alt="imagem-copmputador" class="img-computatador">
+
+        </header>
+    </div>
+</section>
+
+<!-- ACESSO RÁPIDO - START -->
+<section class="acessoRapido container">
+    <a href="#">
+        <div class="iconeAces">
+            <img src="img/icon-design.svg">
+        </div>
+        <H3>DESIGN</H3>
+    </a>
+    <a href="#">
+        <div class="iconeAces">
+            <img src="img/icon-ux.svg">
+        </div>
+        <H3>UX</H3>
+    </a>
+    <a href="#">
+        <div class="iconeAces">
+            <img src="img/icon-marketing.svg">
+        </div>
+        <H3>MARKETING</H3>
+    </a>
+    <a href="#">
+        <div class="iconeAces">
+            <img src="img/icon-servidor.svg">
+        </div>
+        <H3>SERVIDOR</H3>
+    </a>
+    <a href="#">
+        <div class="iconeAces">
+            <img src="img/icon-ux.svg">
+        </div>
+        <H3>UX</H3>
+    </a>
+    <a href="#">
+        <div class="iconeAces">
+            <img src="img/icon-prog.svg">
+        </div>
+        <h3>PROGRAMAÇÃO</h3>
+    </a>
+    <a href="#">
+        <div class="iconeAces">
+            <img src="img/icon-web.svg">
+        </div>
+        <h3>WEB</h3>
+    </a>
+    <a href="#">
+        <div class="iconeAces">
+            <img src="img/icon-mail.svg">
+        </div>
+        <H3>WEBMAIL</H3>
+    </a>
+</section>
+
+<!-- ACESSO RÁPIDO - END -->
+
+<!-- NOTICIAS - START -->
+<div class="container">
+    <h2 class="tituloPrincipalNoticia">Principais noticias</h2><br>
+
+
+
+    <section class="noticias">
+        @foreach ($news as $new)
+            <section>
+                <a href="{{ $new->link }}">
+                    <div>
+                        <img src="{{ !empty($new->link_img) ? url('storage/img-news/'.$new->link_img.'') : 'img/sem-img.jpg'}}" class="imgNoticia">
+                        <p class="ttNoticia">{{$new->title}}</p>
+                        <p class="resumoNoticia">{{$new->contents}}</p>
+                    </div>
+                </a>
+            </section>
+        @endforeach
+    </section>
+</div>
+
+
+
+<!-- NOTICIAS - END -->
+
+<!-- LINHA DIVISÓRIA NOTICIAS-FORMULARIO - START -->
+<section>
+
+    <div id="line"></div>
+
+</section>
+
+<!-- LINHA DIVISÓRIA NOTICIAS-FORMULARIO - END -->
+
+<!-- FALE CONOSCO - START -->
+<div class="containerForm">
+    <section id="faleCo">Fale Conosco</section>
+
+    <form action="{{ route('contacts.store') }}" method="POST" class="formulario {{ !empty(session('mensagem')) ? session('mensagem') : '' }}">
+        @csrf
+        <div class="grupo">
+            <div>
+                <div class="campo">
+
+                    <div>
+                        <label class="texForm" for="nome">Nome</label>
+                        <input type="text" name="name" class="{{$errors->has('name') ? 'is-invalid' : ''}}" id="nome" value="{{ old('name') }}" required>
+                        @if ($errors->has('name'))
+                            <div class="invalid-feedback">{{$errors->first('name')}}</div>
+                        @endif
+                    </div>
+                    <div> <label class="texForm" for="nome">Telefone</label>
+                        <input type="text" name="tel" class="telephone {{$errors->has('tel') ? 'is-invalid' : ''}}" id="telefone" value="{{ old('tel') }}" required>
+                        @if ($errors->has('tel'))
+                            <div class="invalid-feedback">{{$errors->first('tel')}}</div>
+                        @endif
+                    </div>
+
+                    <div>
+                        <label class="texForm" for="nome">E-mail</label>
+                        <input type="email" name="email" class="{{$errors->has('email') ? 'is-invalid' : ''}}" id="email" value="{{ old('email') }}" required>
+                        @if ($errors->has('email'))
+                            <div class="invalid-feedback">{{$errors->first('email')}}</div>
+                        @endif
+                    </div>
+                    <div>
+                        <label class="texForm" for="nome">Setor</label>
+                        <input type="text" name="sector" class="{{$errors->has('sector') ? 'is-invalid' : ''}}" id="setor" value="{{ old('sector') }}" required>
+                        @if ($errors->has('sector'))
+                            <div class="invalid-feedback">{{$errors->first('sector')}}</div>
+                        @endif
+                    </div>
+
+                    <div>
+                        <label class="texForm" for="Mensagem" class="mensagem">Mensagem</label>
+                        <textarea name="message" id="mensagem" rows="10" class="mensagem {{$errors->has('message') ? 'is-invalid' : ''}}" value="{{ old('message') }}" required></textarea>
+                        @if ($errors->has('message'))
+                            <div class="invalid-feedback">{{$errors->first('message')}}</div>
+                        @endif
+                    </div>
+
+                </div>
+                <div id="bt">
+                    <button class="botao" type="submit">ENVIAR</button>
+                </div>
+            </div>
+        </div>
+    </form>
+
+</div>
+@include('site.components.footer')
+@endsection

@@ -19,7 +19,9 @@ input, select {
     margin: 0;
     padding: 0;
 }
-
+.none {
+    display: none;
+}
 body,
 ul,
 li {
@@ -103,7 +105,6 @@ img {
 
 .menu li a {
     display: block;
-    padding: px;
 }
 
 .sec2 {

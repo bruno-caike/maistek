@@ -8,10 +8,14 @@
             <div>
                 <h1 class="fraseTopo">{{ isset($tec->title) ? $tec->title : '' }}</h1>
                 <h5 class="textoTopo">
-                    <p>{{ isset($tec->contents) ? $tec->contents : '' }}</p>
+                    <p>
+                        @if (isset($tec->contents))
+                            {!!strlen(strip_tags($tec->contents)) > 105 ? mb_substr(strip_tags($tec->contents),0,105).' [...]' : strip_tags($tec->contents)!!}
+                        @endif
+                    </p>
                 </H5>
 
-                <a href="#" class="botaoInfo">MAIS INFORMAÇÕES</a>
+                <a href="{{ route('informationTechnology.index') }}" class="botaoInfo">MAIS INFORMAÇÕES</a>
 
             </div>
 
@@ -22,56 +26,9 @@
 </section>
 
 <!-- ACESSO RÁPIDO - START -->
-<section class="acessoRapido container">
-    <a href="#">
-        <div class="iconeAces">
-            <img src="img/icon-design.svg">
-        </div>
-        <H3>DESIGN</H3>
-    </a>
-    <a href="#">
-        <div class="iconeAces">
-            <img src="img/icon-ux.svg">
-        </div>
-        <H3>UX</H3>
-    </a>
-    <a href="#">
-        <div class="iconeAces">
-            <img src="img/icon-marketing.svg">
-        </div>
-        <H3>MARKETING</H3>
-    </a>
-    <a href="#">
-        <div class="iconeAces">
-            <img src="img/icon-servidor.svg">
-        </div>
-        <H3>SERVIDOR</H3>
-    </a>
-    <a href="#">
-        <div class="iconeAces">
-            <img src="img/icon-ux.svg">
-        </div>
-        <H3>UX</H3>
-    </a>
-    <a href="#">
-        <div class="iconeAces">
-            <img src="img/icon-prog.svg">
-        </div>
-        <h3>PROGRAMAÇÃO</h3>
-    </a>
-    <a href="#">
-        <div class="iconeAces">
-            <img src="img/icon-web.svg">
-        </div>
-        <h3>WEB</h3>
-    </a>
-    <a href="#">
-        <div class="iconeAces">
-            <img src="img/icon-mail.svg">
-        </div>
-        <H3>WEBMAIL</H3>
-    </a>
-</section>
+<div class="container">
+    @include('site.components.quickAccess')
+</div>
 
 <!-- ACESSO RÁPIDO - END -->
 
@@ -84,7 +41,7 @@
     <section class="noticias">
         @foreach ($news as $new)
             <section>
-                <a href="{{ $new->link }}">
+                <a href="{{route('new.show', ['id'=>$new->id, 'slug'=>\Str::slug($new->title)])}}">
                     <div>
                         <img src="{{ !empty($new->link_img) ? url('storage/img-news/'.$new->link_img.'') : 'img/sem-img.jpg'}}" class="imgNoticia">
                         <p class="ttNoticia">{{$new->title}}</p>
